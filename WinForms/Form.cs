@@ -3,18 +3,20 @@ namespace WinFormsApp
     public partial class Form : System.Windows.Forms.Form
     {
         DataGridViewUserControl dataGridViewUserControl;
+        TextBoxUserControl textBoxUserControl;
 
         public Form()
         {
             InitializeComponent();
+            dataGridViewUserControl = new();
+            textBoxUserControl = new();
         }
 
         private void Form_Load(object sender, EventArgs e)
         {
             // DataGridView
 
-            dataGridViewUserControl = new();
-            dataGridViewUserControl.Location = new Point(180, 10);
+            dataGridViewUserControl.Location = new Point(250, 10);
             Controls.Add(dataGridViewUserControl);
 
             // Настройка столбцов
@@ -50,13 +52,13 @@ namespace WinFormsApp
             Controls.Add(listBoxUserControl);
 
             string[] items = { "Item 1", "Item 2", "Item 3" };
-            listBoxUserControl.Strings = items;
+            foreach (var item in items)
+                listBoxUserControl.Strings.Add(item);
 
             listBoxUserControl.SelectedValueChanged += ListBoxUserControl_SelectedValueChanged;
 
             // TextBox
 
-            TextBoxUserControl textBoxUserControl = new();
             textBoxUserControl.Location = new Point(10, 10);
             Controls.Add(textBoxUserControl);
 
@@ -96,6 +98,16 @@ namespace WinFormsApp
             ListBoxUserControl listBoxUserControl = (ListBoxUserControl)sender;
 
             MessageBox.Show("Selected Value Changed to: " + listBoxUserControl.SelectedValue);
+        }
+
+        private void ButtonGet_Click(object sender, EventArgs e)
+        {
+            DateTime? selectedDate = textBoxUserControl.SelectedDate;
+
+            if (selectedDate.HasValue)
+            {
+                MessageBox.Show($"Выбранная дата: {selectedDate.Value.ToShortDateString()}");
+            }
         }
     }
 }

@@ -60,14 +60,14 @@ namespace WinFormsApp
         // Метод для заполнения значения ячейки в DataGridView
         public void FillData<T>(T item, int row, int column)
         {
-            if (row >= dataGridView.RowCount)
-            {
-                dataGridView.Rows.Add(row - dataGridView.RowCount + 1);
-            }
-
             if (column >= dataGridView.ColumnCount)
             {
                 throw new ArgumentOutOfRangeException("column");
+            }
+
+            if (row >= dataGridView.RowCount)
+            {
+                dataGridView.Rows.Add(row - dataGridView.RowCount + 1);
             }
 
             string propertyName = dataGridView.Columns[column].DataPropertyName;
@@ -107,12 +107,17 @@ namespace WinFormsApp
         }
 
         // Событие, вызываемое при смене значения в DataGridView
-        public event EventHandler? SelectedRowChanged;
+        private event EventHandler? selectedRowChanged;
+        public event EventHandler? SelectedRowChanged
+        {
+            add => selectedRowChanged += value;
+            remove => selectedRowChanged -= value;
+        }
 
         // Обработчик события SelectionChanged для DataGridView
         private void DataGridView_SelectionChanged(object sender, EventArgs e)
         {
-            SelectedRowChanged?.Invoke(this, e);
+            selectedRowChanged?.Invoke(this, e);
         }
     }
 }

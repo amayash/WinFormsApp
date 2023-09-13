@@ -9,7 +9,7 @@ namespace WinFormsApp
             InitializeComponent();
         }
 
-        // Публичное свойство для установки строковых значений в список
+        /*// Публичное свойство для получения строковых значений в списке
         public string[] Strings
         {
             get { return listBox.Items.Cast<string>().ToArray(); }
@@ -25,6 +25,11 @@ namespace WinFormsApp
                     }
                 }
             }
+        }*/
+
+        public ListBox.ObjectCollection Strings
+        {
+            get { return listBox.Items; }
         }
 
         // Публичный метод для очистки списка
@@ -60,12 +65,17 @@ namespace WinFormsApp
         }
 
         // Событие, вызываемое при смене значения в ListBox
-        public event EventHandler? SelectedValueChanged;
+        private event EventHandler? selectedValueChanged;
+        public event EventHandler? SelectedValueChanged
+        {
+            add => selectedValueChanged += value;
+            remove => selectedValueChanged -= value;
+        }
 
         // Обработчик события SelectedIndexChanged для ListBox
         private void ListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SelectedValueChanged?.Invoke(this, e);
+            selectedValueChanged?.Invoke(this, e);
         }
     }
 }

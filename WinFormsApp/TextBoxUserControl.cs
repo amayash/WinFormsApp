@@ -8,27 +8,25 @@ namespace WinFormsApp
         {
             InitializeComponent();
         }
+        public bool Error { get; private set; }
 
         // Свойство для получения и установки даты
         public DateTime? SelectedDate
         {
             get
             {
-                if (checkBox.Checked || string.IsNullOrWhiteSpace(textBox.Text))
+                if (checkBox.Checked)
                 {
                     return null; // Возвращает null
                 }
+                if (DateTime.TryParseExact(textBox.Text, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result))
+                {
+                    return result; // Возвращает дату, если формат введенных данных верный
+                }
                 else
                 {
-                    if (DateTime.TryParseExact(textBox.Text, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result))
-                    {
-                        return result; // Возвращает дату, если формат введенных данных верный
-                    }
-                    else
-                    {
-                        MessageBox.Show("Введенное значение не соответствует формату DD.MM.YYYY.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return null; // Возвращает null, если формат неверен
-                    }
+                    Error = true;
+                    return null; // Возвращает null, если формат неверен
                 }
             }
             set
@@ -39,25 +37,32 @@ namespace WinFormsApp
                 }
                 else
                 {
-                    textBox.Text = string.Empty; // Очищает TextBox, если дата null
+                    checkBox.Checked = true;
                 }
             }
         }
 
         // Событие, вызываемое при изменении значения
-        public event EventHandler? ValueChanged;
+        private event EventHandler? valueChanged;
+        public event EventHandler? ValueChanged
+        {
+            add => valueChanged += value;
+            remove => valueChanged -= value;
+        }
 
         // Обработчик события CheckedChanged для CheckBox
         private void CheckBox_CheckedChanged(object sender, EventArgs e)
         {
             textBox.Enabled = !checkBox.Checked; // Включает/отключает TextBox в зависимости от состояния CheckBox
-
-            if (!checkBox.Checked && string.IsNullOrWhiteSpace(textBox.Text))
+            if (checkBox.Checked)
             {
-                MessageBox.Show("Значение не может быть пустым.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox.Text = null;
             }
+        }
 
-            ValueChanged?.Invoke(this, e);
+        private void ButtonGet_Click(object sender, EventArgs e)
+        {
+            valueChanged?.Invoke(this, e);
         }
     }
 }
