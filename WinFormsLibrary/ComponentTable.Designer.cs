@@ -1,6 +1,6 @@
 ﻿namespace WinFormsLibrary
 {
-    partial class Component
+    partial class ComponentTable
     {
         /// <summary>
         /// Обязательная переменная конструктора.

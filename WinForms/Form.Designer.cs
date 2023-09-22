@@ -30,7 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             buttonGet = new Button();
-            component1 = new WinFormsLibrary.Component(components);
             SuspendLayout();
             // 
             // buttonGet
@@ -58,6 +57,5 @@
         #endregion
         private TextBox textBoxDate;
         private Button buttonGet;
-        private WinFormsLibrary.Component component1;
     }
 }

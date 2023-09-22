@@ -1,4 +1,5 @@
 using System.Windows.Forms;
+using WinFormsLibrary;
 
 namespace WinFormsApp
 {
@@ -6,47 +7,25 @@ namespace WinFormsApp
     {
         DataGridViewUserControl dataGridViewUserControl;
         TextBoxUserControl textBoxUserControl;
-
+        ComponentTable componentTable;
         public Form()
         {
             InitializeComponent();
             dataGridViewUserControl = new();
             textBoxUserControl = new();
-            CreateImage();
-            component11.FileName = "1.txt";
-        }
-
-        private void CreateImage()
-        {
-            Bitmap bmp = new(userControl11.Width - 10, userControl11.Height - 10);
-            Graphics gr = Graphics.FromImage(bmp);
-            gr.DrawEllipse(new Pen(Color.Red), 10, 10, 20, 20); 
-            userControl11.Avatar = bmp;
-        }
-
-        private void userControl11_AvatarChanged(object sender, EventArgs e)
-        {
-            var width = userControl11.Avatar.Width;
-            MessageBox.Show($"Change avatar, width={width}");
-        }
-
-        private void buttonSave_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                component11.SaveToFile(richTextBoxText.Lines);
-                MessageBox.Show("Сохарнено успешно", "Результат",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            componentTable = new();
         }
 
         private void Form_Load(object sender, EventArgs e)
         {
+            List<string[,]> list = new();
+            string[,] arr1 = { { "1", "2" }, { "3", "4" } };
+            string[,] arr2 = { { "7", "8" }, { "9", "10" } };
+            string[,] arr3 = { { "a", "b" }, { "c", "d" } };
+            list.Add(arr1);
+            list.Add(arr2);
+            list.Add(arr3);
+            componentTable.CreateSpreadsheetWorkbook("D:\\test.xlsx", "title", list);
             // DataGridView
 
             dataGridViewUserControl.Location = new Point(250, 10);
