@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WinFormsApp\WinFormsApp.csproj" />
+    <ProjectReference Include="..\WinFormsLibrary\WinFormsLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>

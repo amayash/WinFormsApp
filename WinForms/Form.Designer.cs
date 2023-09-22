@@ -28,34 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonGet = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            buttonGet = new Button();
+            component1 = new WinFormsLibrary.Component(components);
+            SuspendLayout();
             // 
             // buttonGet
             // 
-            this.buttonGet.Location = new System.Drawing.Point(176, 12);
-            this.buttonGet.Name = "buttonGet";
-            this.buttonGet.Size = new System.Drawing.Size(38, 23);
-            this.buttonGet.TabIndex = 0;
-            this.buttonGet.Text = "get";
-            this.buttonGet.UseVisualStyleBackColor = true;
-            this.buttonGet.Click += new System.EventHandler(this.ButtonGet_Click);
+            buttonGet.Location = new Point(176, 12);
+            buttonGet.Name = "buttonGet";
+            buttonGet.Size = new Size(38, 23);
+            buttonGet.TabIndex = 0;
+            buttonGet.Text = "get";
+            buttonGet.UseVisualStyleBackColor = true;
+            buttonGet.Click += ButtonGet_Click;
             // 
             // Form
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(778, 450);
-            this.Controls.Add(this.buttonGet);
-            this.Name = "Form";
-            this.Text = "Form";
-            this.Load += new System.EventHandler(this.Form_Load);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(778, 450);
+            Controls.Add(buttonGet);
+            Name = "Form";
+            Text = "Form";
+            Load += Form_Load;
+            ResumeLayout(false);
         }
 
         #endregion
         private TextBox textBoxDate;
         private Button buttonGet;
+        private WinFormsLibrary.Component component1;
     }
 }
