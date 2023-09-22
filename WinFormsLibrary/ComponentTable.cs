@@ -37,32 +37,6 @@ namespace WinFormsLibrary
 
         public void CreateSpreadsheetWorkbook(string filepath, string documentTitle, List<string[,]> tables)
         {
-            // Создание документа электронных таблиц, указав путь к файлу.
-            // По умолчанию установлены значения AutoSave = true, Editable = true и Type = xlsx.
-            SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.
-                Create(filepath, SpreadsheetDocumentType.Workbook);
-
-            // Добавление части рабочей книги в документ.
-            WorkbookPart workbookpart = spreadsheetDocument.AddWorkbookPart();
-            workbookpart.Workbook = new Workbook();
-
-            // Добавление части листа в часть рабочей книги.
-            WorksheetPart worksheetPart = workbookpart.AddNewPart<WorksheetPart>();
-            worksheetPart.Worksheet = new Worksheet(new SheetData());
-
-            // Добавление листов в рабочую книгу.
-            Sheets sheets = spreadsheetDocument.WorkbookPart.Workbook.AppendChild(new Sheets());
-
-            // Добавление нового листа и связь его с рабочей книгой.
-            Sheet sheet = new Sheet()
-            {
-                Id = spreadsheetDocument.WorkbookPart.
-                GetIdOfPart(worksheetPart),
-                SheetId = 1,
-                Name = "mySheet"
-            };
-            sheets.Append(sheet);
-
             // Открываем документ для редактирования.
             using (SpreadsheetDocument spreadSheet = SpreadsheetDocument.Open(filepath, true))
             {
@@ -78,7 +52,7 @@ namespace WinFormsLibrary
                 }
 
                 // Вставляем текст в часть SharedStringTable.
-                int index = InsertSharedStringItem(text, shareStringPart);
+                int index = InsertSharedStringItem(documentTitle, shareStringPart);
 
                 // Вставляем новый лист.
                 WorksheetPart worksheetPart = InsertWorksheet(spreadSheet.WorkbookPart);
@@ -89,13 +63,32 @@ namespace WinFormsLibrary
                 // Устанавливаем значение ячейки A1.
                 cell.CellValue = new CellValue(index.ToString());
                 cell.DataType = new EnumValue<CellValues>(CellValues.SharedString);
+
+                // Создаем стиль для жирного текста.
+                CellFormat cellFormat = new CellFormat();
+                cellFormat.FontId = 1; // Устанавливаем идентификатор шрифта для жирного стиля.
+
+                // Добавляем стиль в SharedStringTablePart.
+                if (shareStringPart.WorkbookStylesPart == null)
+                {
+                    shareStringPart.AddNewPart<WorkbookStylesPart>();
+                }
+
+                if (shareStringPart.WorkbookStylesPart.Stylesheet == null)
+                {
+                    shareStringPart.WorkbookStylesPart.Stylesheet = new Stylesheet();
+                }
+
+                shareStringPart.WorkbookStylesPart.Stylesheet.Fonts = new Fonts();
+                shareStringPart.WorkbookStylesPart.Stylesheet.Fonts.AppendChild(new Font() { Bold = new Bold() });
+
+                // Применяем созданный стиль к ячейке.
+                cell.StyleIndex = 1;
+
+
+                // Сохраняем новый лист.
+                worksheetPart.Worksheet.Save();
             }
-
-            // Сохранение рабочей книги.
-            workbookpart.Workbook.Save();
-
-            // Закрытие документа.
-            spreadsheetDocument.Close();
         }
 
         // По заданному тексту и SharedStringTablePart создает SharedStringItem с указанным текстом
