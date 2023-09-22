@@ -9,24 +9,6 @@ namespace WinFormsApp
             InitializeComponent();
         }
 
-        /*// Публичное свойство для получения строковых значений в списке
-        public string[] Strings
-        {
-            get { return listBox.Items.Cast<string>().ToArray(); }
-            set
-            {
-                // Очищаем список элементов и устанавливаем новые значения
-                listBox.Items.Clear();
-                if (value != null)
-                {
-                    foreach (string item in value)
-                    {
-                        listBox.Items.Add(item);
-                    }
-                }
-            }
-        }*/
-
         public ListBox.ObjectCollection Strings
         {
             get { return listBox.Items; }
@@ -39,7 +21,7 @@ namespace WinFormsApp
         }
 
         // Публичное свойство для установки и получения выбранного значения
-        public string SelectedValue
+        public string? SelectedValue
         {
             get
             {
