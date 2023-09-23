@@ -1,5 +1,6 @@
-using System.Windows.Forms;
+using System.Reflection.Emit;
 using WinFormsLibrary;
+using WinFormsLibrary.OfficePackage.HelperModels;
 
 namespace WinFormsApp
 {
@@ -18,14 +19,6 @@ namespace WinFormsApp
 
         private void Form_Load(object sender, EventArgs e)
         {
-            List<string[,]> list = new();
-            string[,] arr1 = { { "1", "2" }, { "3", "4" } };
-            string[,] arr2 = { { "7", "8" }, { "9", "10" } };
-            string[,] arr3 = { { "a", "b" }, { "c", "d" } };
-            list.Add(arr1);
-            list.Add(arr2);
-            list.Add(arr3);
-            componentTable.CreateSpreadsheetWorkbook("D:\\test.xlsx", "title", list);
             // DataGridView
 
             dataGridViewUserControl.Location = new Point(250, 10);
@@ -120,6 +113,68 @@ namespace WinFormsApp
             {
                 MessageBox.Show($"Выбранная дата: {selectedDate.Value.ToShortDateString()}");
             }
+        }
+
+        private void ButtonTable_Click(object sender, EventArgs e)
+        {
+            List<string[,]> list1 = new();
+            string[,] arr1 = { { "1", "2" }, { "3", "4" } };
+            string[,] arr2 = { { "7", "8" }, { "9", "10" } };
+            string[,] arr3 = { { "a", "b" }, { "c", "d" } };
+            list1.Add(arr1);
+            list1.Add(arr2);
+            list1.Add(arr3);
+            List<string[,]> list2 = new();
+            string[,] arr4 = { { "asd", "2" }, { "3", "4" } };
+            string[,] arr5 = { { "7", "8" }, { "9", "10" } };
+            string[,] arr6 = { { "a", "b" }, { "c", "d" } };
+            list2.Add(arr6);
+            list2.Add(arr5);
+            list2.Add(arr4);
+            componentTable.CreateTableReport(new List<ExcelInfo>() {
+                new()
+                {
+                    FileName = "D:\\test1.xlsx",
+                    Title = "title1",
+                    Tables = list1
+                },
+                new()
+                {
+                    FileName = "D:\\test2.xlsx",
+                    Title = "title2",
+                    Tables = list2
+                }
+            });
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            var props = new string[] { "Age", "FirstName", "LastName" };
+            var titles = new string[] { "Возраст", "Имя", "Фамилия" };
+
+            var people = new Person[]
+            {
+                new Person { FirstName = "John", LastName = "Doe", Age = 30 },
+                new Person { FirstName = "Alice", LastName = "Smith", Age = 25 },
+            };
+
+            double[] widths = { 10, 15, 20 };
+            double[] heights = { 25, 15, 15 };
+            componentHardTable.CreateHardTableReport(new ExcelInfoTable<Person>
+            {
+                FileName = "D:\\output.xlsx",
+                Title = "main title",
+                Titles = titles,
+                Data = people,
+                Props = props,
+                RowHeight = heights,
+                ColumnWidth = widths
+            });
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

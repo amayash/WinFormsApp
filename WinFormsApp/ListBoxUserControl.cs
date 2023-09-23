@@ -1,6 +1,4 @@
-﻿using System.Data;
-
-namespace WinFormsApp
+﻿namespace WinFormsApp
 {
     public partial class ListBoxUserControl : UserControl
     {
