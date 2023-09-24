@@ -8,9 +8,13 @@ namespace WinFormsApp
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// Возвращает или задает значение, указывающее на наличие ошибки.
+        /// </summary>
         public bool Error { get; private set; }
-
-        // Свойство для получения и установки даты
+        /// <summary>
+        /// Свойство для получения и установки даты.
+        /// </summary>
         public DateTime? SelectedDate
         {
             get
@@ -41,16 +45,20 @@ namespace WinFormsApp
                 }
             }
         }
-
-        // Событие, вызываемое при изменении значения
+        /// <summary>
+        /// Событие, вызываемое при изменении значения.
+        /// </summary>
         private event EventHandler? valueChanged;
         public event EventHandler? ValueChanged
         {
             add => valueChanged += value;
             remove => valueChanged -= value;
         }
-
-        // Обработчик события CheckedChanged для CheckBox
+        /// <summary>
+        /// Обработчик события CheckedChanged для CheckBox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CheckBox_CheckedChanged(object sender, EventArgs e)
         {
             textBox.Enabled = !checkBox.Checked; // Включает/отключает TextBox в зависимости от состояния CheckBox
@@ -58,11 +66,6 @@ namespace WinFormsApp
             {
                 textBox.Text = null;
             }
-        }
-
-        private void ButtonGet_Click(object sender, EventArgs e)
-        {
-            valueChanged?.Invoke(this, e);
         }
     }
 }

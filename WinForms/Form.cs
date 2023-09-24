@@ -1,5 +1,5 @@
-using System.Reflection.Emit;
 using WinFormsLibrary;
+using WinFormsLibrary.OfficePackage.HelperEnums;
 using WinFormsLibrary.OfficePackage.HelperModels;
 
 namespace WinFormsApp
@@ -9,14 +9,20 @@ namespace WinFormsApp
         DataGridViewUserControl dataGridViewUserControl;
         TextBoxUserControl textBoxUserControl;
         ComponentTable componentTable;
+        ComponentChart componentChart;
         public Form()
         {
             InitializeComponent();
             dataGridViewUserControl = new();
             textBoxUserControl = new();
             componentTable = new();
+            componentChart = new();
         }
-
+        /// <summary>
+        /// Метод, вызываемый после загрузки формы.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form_Load(object sender, EventArgs e)
         {
             // DataGridView
@@ -69,8 +75,11 @@ namespace WinFormsApp
 
             textBoxUserControl.ValueChanged += TextBoxUserControl_ValueChanged;
         }
-
-        // Получение выбранного объекта в пользовательском DataGridView
+        /// <summary>
+        /// Получение выбранного объекта в пользовательском DataGridView.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DataGridViewUserControl_SelectionChanged(object sender, EventArgs e)
         {
             Person? selectedPerson = dataGridViewUserControl?.GetObjectFromSelectedRow<Person>();
@@ -84,8 +93,11 @@ namespace WinFormsApp
                 MessageBox.Show("Ничего не выбрано.");
             }
         }
-
-        // Обработчик события при изменении значения в пользовательском TextBox
+        /// <summary>
+        /// Обработчик события при изменении значения в пользовательском TextBox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBoxUserControl_ValueChanged(object sender, EventArgs e)
         {
             TextBoxUserControl textBoxUserControl = (TextBoxUserControl)sender;
@@ -96,15 +108,23 @@ namespace WinFormsApp
                 MessageBox.Show($"Выбранная дата: {selectedDate.Value.ToShortDateString()}");
             }
         }
-
-        // Обработчик события при смене значения в пользовательском ListBox
+        /// <summary>
+        /// Обработчик события при смене значения в пользовательском ListBox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListBoxUserControl_SelectedValueChanged(object sender, EventArgs e)
         {
             ListBoxUserControl listBoxUserControl = (ListBoxUserControl)sender;
 
             MessageBox.Show("Selected Value Changed to: " + listBoxUserControl.SelectedValue);
         }
-
+        /// <summary>
+        /// Обработчик события нажатия на кнопку "get".
+        /// Отображает выбранную дату в диалоговом окне сообщения, если дата была выбрана.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonGet_Click(object sender, EventArgs e)
         {
             DateTime? selectedDate = textBoxUserControl.SelectedDate;
@@ -114,7 +134,12 @@ namespace WinFormsApp
                 MessageBox.Show($"Выбранная дата: {selectedDate.Value.ToShortDateString()}");
             }
         }
-
+        /// <summary>
+        /// Обработчик события нажатия на кнопку "table".
+        /// Создает отчет с таблицей в формате Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonTable_Click(object sender, EventArgs e)
         {
             List<string[,]> list1 = new();
@@ -124,30 +149,20 @@ namespace WinFormsApp
             list1.Add(arr1);
             list1.Add(arr2);
             list1.Add(arr3);
-            List<string[,]> list2 = new();
-            string[,] arr4 = { { "asd", "2" }, { "3", "4" } };
-            string[,] arr5 = { { "7", "8" }, { "9", "10" } };
-            string[,] arr6 = { { "a", "b" }, { "c", "d" } };
-            list2.Add(arr6);
-            list2.Add(arr5);
-            list2.Add(arr4);
-            componentTable.CreateTableReport(new List<ExcelInfo>() {
-                new()
-                {
-                    FileName = "D:\\test1.xlsx",
-                    Title = "title1",
-                    Tables = list1
-                },
-                new()
-                {
-                    FileName = "D:\\test2.xlsx",
-                    Title = "title2",
-                    Tables = list2
-                }
+            componentTable.CreateTableReport(new ExcelInfo()
+            {
+                FileName = "D:\\test1.xlsx",
+                Title = "title1",
+                Tables = list1
             });
         }
-
-        private void Button2_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Обработчик события нажатия на кнопку "hard table".
+        /// Создает отчет с таблицей в формате Excel, используя переданные данные об объекте.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonHardTable_Click(object sender, EventArgs e)
         {
             var props = new string[] { "Age", "FirstName", "LastName" };
             var titles = new string[] { "Возраст", "Имя", "Фамилия" };
@@ -171,10 +186,25 @@ namespace WinFormsApp
                 ColumnWidth = widths
             });
         }
-
-        private void Button3_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Обработчик события нажатия на кнопку "chart".
+        /// Создает отчет в формате Excel с гистограммой.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonChart_Click(object sender, EventArgs e)
         {
-
+            string[] seriesNames = { "1", "2", "3" };
+            double[] data = { 5, 5, 10 };
+            componentChart.CreateChartReport(new ExcelInfoChart()
+            {
+                FileName = "D:\\chart.xlsx",
+                Title = "Диаграммка",
+                TitleChart = "Гистограммка",
+                LegendPosition = LegendPosition.Bottom,
+                SeriesNames = seriesNames,
+                Data = data
+            });
         }
     }
 }

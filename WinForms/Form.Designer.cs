@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             buttonGet = new Button();
             buttonTable = new Button();
             button2 = new Button();
             button3 = new Button();
-            componentHardTable = new WinFormsLibrary.ComponentHardTable();
+            componentHardTable = new WinFormsLibrary.ComponentHardTable(components);
             SuspendLayout();
             // 
             // buttonGet
@@ -61,9 +62,9 @@
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 2;
-            button2.Text = "button2";
+            button2.Text = "hard table";
             button2.UseVisualStyleBackColor = true;
-            button2.Click += Button2_Click;
+            button2.Click += ButtonHardTable_Click;
             // 
             // button3
             // 
@@ -71,9 +72,9 @@
             button3.Name = "button3";
             button3.Size = new Size(75, 23);
             button3.TabIndex = 3;
-            button3.Text = "button3";
+            button3.Text = "chart";
             button3.UseVisualStyleBackColor = true;
-            button3.Click += Button3_Click;
+            button3.Click += ButtonChart_Click;
             // 
             // Form
             // 

@@ -1,6 +1,4 @@
 ﻿using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.EMMA;
-using DocumentFormat.OpenXml.Spreadsheet;
 using System.ComponentModel;
 using WinFormsLibrary.OfficePackage;
 using WinFormsLibrary.OfficePackage.HelperEnums;
@@ -10,11 +8,11 @@ namespace WinFormsLibrary
 {
     public partial class ComponentHardTable : Component
     {
-        SaveToExcel saveToExcel;
+        private OpenXMLSaveToExcel saveToExcel;
         public ComponentHardTable()
         {
             InitializeComponent();
-            saveToExcel = new SaveToExcel();
+            saveToExcel = new OpenXMLSaveToExcel();
         }
 
         public ComponentHardTable(IContainer container)
@@ -22,11 +20,33 @@ namespace WinFormsLibrary
             container.Add(this);
 
             InitializeComponent();
-            saveToExcel = new SaveToExcel();
+            saveToExcel = new OpenXMLSaveToExcel();
         }
-
+        /// <summary>
+        /// Создает отчет с жестко настроенной таблицей в документе Excel на основе предоставленной информации.
+        /// </summary>
+        /// <typeparam name="T">Тип данных для таблицы.</typeparam>
+        /// <param name="info">Информация о создании жестко настроенной таблицы в документе Excel.</param>
         public void CreateHardTableReport<T>(ExcelInfoTable<T> info)
         {
+            if (string.IsNullOrEmpty(info.FileName) || string.IsNullOrEmpty(info.Title)
+                || info.Titles.Length == 0 || info.Data.Length == 0 || info.ColumnWidth.Length == 0
+                || info.Props.Length == 0 || info.RowHeight.Length == 0)
+            {
+                throw new ArgumentException("Неполные входные данные.");
+            }
+
+            if (info.Titles.Any(string.IsNullOrEmpty) || info.Props.Any(string.IsNullOrEmpty)
+                || info.ColumnWidth.Any(x => x == 0) || info.RowHeight.Any(x => x == 0))
+            {
+                throw new ArgumentException("Неверные входные данные.");
+            }
+
+            if (info.Titles.Length != info.Props.Length)
+            {
+                throw new ArgumentException("Не для каждого столбца известно свойство/поле класса из которого для него следует брать значение.");
+            }
+
             saveToExcel.CreateExcel(new() { FileName = info.FileName, Title = info.Title });
 
             // Устанавливаем ширину столбцов
@@ -53,7 +73,7 @@ namespace WinFormsLibrary
                     ColumnName = columnLabel.ToString(),
                     RowIndex = rowIndex,
                     Text = title,
-                    StyleInfo = ExcelStyleInfoType.Title
+                    StyleInfo = ExcelStyleInfoType.TitleWithBorder
                 });
                 columnLabel++;
             }
@@ -72,7 +92,7 @@ namespace WinFormsLibrary
                         ColumnName = columnLabel.ToString(),
                         RowIndex = rowIndex,
                         Text = propertyValue,
-                        StyleInfo = columnLabel == 'A' ? ExcelStyleInfoType.Title : ExcelStyleInfoType.TextWithBorder
+                        StyleInfo = columnLabel == 'A' ? ExcelStyleInfoType.TitleWithBorder : ExcelStyleInfoType.TextWithBorder
                     });
                     columnLabel++;
                 }
@@ -88,6 +108,13 @@ namespace WinFormsLibrary
             saveToExcel.SaveExcel(new() { FileName = info.FileName, Title = info.Title });
         }
 
+        /// <summary>
+        /// Получает значение свойства объекта <typeparamref name="T"/> по его имени.
+        /// </summary>
+        /// <typeparam name="T">Тип объекта, из которого нужно получить значение свойства.</typeparam>
+        /// <param name="propertyName">Имя свойства, значение которого нужно получить.</param>
+        /// <param name="data">Объект, из которого будет получено значение свойства.</param>
+        /// <returns>Значение свойства в виде строки или пустая строка, если свойство не найдено или его значение равно null.</returns>
         private string GetPropertyValue<T>(string propertyName, T data)
         {
             var propertyInfo = data.GetType().GetProperty(propertyName);

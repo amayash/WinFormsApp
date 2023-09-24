@@ -15,7 +15,10 @@ namespace WinFormsApp
             dataGridView.MultiSelect = false;
         }
 
-        // Метод для настройки столбцов DataGridView
+        /// <summary>
+        /// Настраивает столбцы DataGridView на основе заданных конфигураций.
+        /// </summary>
+        /// <param name="columnConfigs">Список конфигураций столбцов для настройки.</param>
         public void ConfigureColumns(List<ColumnConfig> columnConfigs)
         {
             dataGridView.Columns.Clear();
@@ -30,14 +33,16 @@ namespace WinFormsApp
                 dataGridView.Columns.Add(column);
             }
         }
-
-        // Метод для очистки строк DataGridView
+        /// <summary>
+        /// Метод для очистки строк DataGridView.
+        /// </summary>
         public void ClearRows()
         {
             dataGridView.Rows.Clear();
         }
-
-        // Свойство для установки и получения индекса выбранной строки
+        /// <summary>
+        /// Свойство для установки и получения индекса выбранной строки
+        /// </summary>
         public int SelectedRowIndex
         {
             get
@@ -56,8 +61,13 @@ namespace WinFormsApp
                 }
             }
         }
-
-        // Метод для заполнения значения ячейки в DataGridView
+        /// <summary>
+        /// Заполняет ячейку DataGridView данными из объекта.
+        /// </summary>
+        /// <typeparam name="T">Тип объекта данных.</typeparam>
+        /// <param name="item">Объект данных, из которого берутся значения.</param>
+        /// <param name="row">Индекс строки DataGridView.</param>
+        /// <param name="column">Индекс столбца DataGridView.</param>
         public void FillData<T>(T item, int row, int column)
         {
             if (column >= dataGridView.ColumnCount)
@@ -80,7 +90,11 @@ namespace WinFormsApp
             }
         }
 
-        // Публичный параметризованный метод для получения объекта из выбранной строки
+        /// <summary>
+        /// Получает объект типа <typeparamref name="T"/> из выделенной строки DataGridView.
+        /// </summary>
+        /// <typeparam name="T">Тип объекта данных.</typeparam>
+        /// <returns>Объект данных типа <typeparamref name="T"/> или значение по умолчанию, если строка не выделена.</returns>
         public T? GetObjectFromSelectedRow<T>()
         {
             if (SelectedRowIndex >= 0)
@@ -105,16 +119,20 @@ namespace WinFormsApp
 
             return default;
         }
-
-        // Событие, вызываемое при смене значения в DataGridView
+        /// <summary>
+        /// Событие, вызываемое при смене значения в DataGridView.
+        /// </summary>
         private event EventHandler? selectedRowChanged;
         public event EventHandler? SelectedRowChanged
         {
             add => selectedRowChanged += value;
             remove => selectedRowChanged -= value;
         }
-
-        // Обработчик события SelectionChanged для DataGridView
+        /// <summary>
+        /// Обработчик события SelectionChanged для DataGridView.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DataGridView_SelectionChanged(object sender, EventArgs e)
         {
             selectedRowChanged?.Invoke(this, e);

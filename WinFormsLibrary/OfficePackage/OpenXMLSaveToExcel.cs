@@ -8,7 +8,7 @@ using WinFormsLibrary.OfficePackage.HelperModels;
 
 namespace WinFormsLibrary.OfficePackage
 {
-    public class SaveToExcel
+    public class OpenXMLSaveToExcel
     {
         private SpreadsheetDocument? _spreadsheetDocument;
 
@@ -96,11 +96,13 @@ namespace WinFormsLibrary.OfficePackage
             var cellFormats = new CellFormats() { Count = 3U };
             var cellFormatFont = new CellFormat() { NumberFormatId = 0U, FontId = 0U, FillId = 0U, BorderId = 0U, FormatId = 0U, ApplyFont = true };
             var cellFormatFontAndBorder = new CellFormat() { NumberFormatId = 0U, FontId = 0U, FillId = 0U, BorderId = 1U, FormatId = 0U, ApplyFont = true, ApplyBorder = true };
+            var cellFormatTitleAndBorder = new CellFormat() { NumberFormatId = 0U, FontId = 1U, FillId = 0U, BorderId = 1U, FormatId = 0U, ApplyFont = true, ApplyBorder = true };
             var cellFormatTitle = new CellFormat() { NumberFormatId = 0U, FontId = 1U, FillId = 0U, BorderId = 0U, FormatId = 0U, Alignment = new Alignment() { Vertical = VerticalAlignmentValues.Center, WrapText = true, Horizontal = HorizontalAlignmentValues.Center }, ApplyFont = true };
 
             cellFormats.Append(cellFormatFont);
             cellFormats.Append(cellFormatFontAndBorder);
             cellFormats.Append(cellFormatTitle);
+            cellFormats.Append(cellFormatTitleAndBorder);
 
             var cellStyles = new CellStyles() { Count = 1U };
 
@@ -143,13 +145,17 @@ namespace WinFormsLibrary.OfficePackage
         {
             return styleInfo switch
             {
+                ExcelStyleInfoType.TitleWithBorder => 3U,
                 ExcelStyleInfoType.Title => 2U,
                 ExcelStyleInfoType.TextWithBorder => 1U,
                 ExcelStyleInfoType.Text => 0U,
                 _ => 0U,
             };
         }
-
+        /// <summary>
+        /// Создает новый Excel-документ с заданными параметрами.
+        /// </summary>
+        /// <param name="info">Информация для создания документа.</param>
         public void CreateExcel(ExcelInfo info)
         {
             _spreadsheetDocument = SpreadsheetDocument.Create(info.FileName, SpreadsheetDocumentType.Workbook);
@@ -186,7 +192,10 @@ namespace WinFormsLibrary.OfficePackage
 
             _worksheet = worksheetPart.Worksheet;
         }
-
+        /// <summary>
+        /// Вставляет ячейку с указанными параметрами в рабочий лист документа.
+        /// </summary>
+        /// <param name="excelParams">Параметры ячейки.</param>
         public void InsertCellInWorksheet(ExcelCellParameters excelParams)
         {
             if (_worksheet == null || _shareStringPart == null)
@@ -245,7 +254,11 @@ namespace WinFormsLibrary.OfficePackage
             cell.DataType = new EnumValue<CellValues>(CellValues.SharedString);
             cell.StyleIndex = GetStyleValue(excelParams.StyleInfo);
         }
-
+        /// <summary>
+        /// Устанавливает ширину столбца в листе Excel по указанному индексу столбца.
+        /// </summary>
+        /// <param name="columnIndex">Индекс столбца, для которого устанавливается ширина.</param>
+        /// <param name="width">Заданная ширина столбца.</param>
         public void SetColumnWidth(uint columnIndex, double width)
         {
             Columns lstColumns = _worksheet.GetFirstChild<Columns>();
@@ -261,7 +274,11 @@ namespace WinFormsLibrary.OfficePackage
             if (needToInsertColumns)
                 _worksheet.InsertAt(lstColumns, 0);
         }
-
+        /// <summary>
+        /// Устанавливает высоту строки в листе Excel по указанному индексу строки.
+        /// </summary>
+        /// <param name="rowIndex">Индекс строки, для которой устанавливается высота.</param>
+        /// <param name="height">Заданная высота строки.</param>
         public void SetRowHeight(uint rowIndex, double height)
         {
             // Получаем объект SheetData, где хранятся строки
@@ -277,40 +294,10 @@ namespace WinFormsLibrary.OfficePackage
                 row.CustomHeight = true;
             }
         }
-
-        public void MergeCells(ExcelMergeParameters excelParams)
-        {
-            if (_worksheet == null)
-            {
-                return;
-            }
-            MergeCells mergeCells;
-
-            if (_worksheet.Elements<MergeCells>().Any())
-            {
-                mergeCells = _worksheet.Elements<MergeCells>().First();
-            }
-            else
-            {
-                mergeCells = new MergeCells();
-
-                if (_worksheet.Elements<CustomSheetView>().Any())
-                {
-                    _worksheet.InsertAfter(mergeCells, _worksheet.Elements<CustomSheetView>().First());
-                }
-                else
-                {
-                    _worksheet.InsertAfter(mergeCells, _worksheet.Elements<SheetData>().First());
-                }
-            }
-
-            var mergeCell = new MergeCell()
-            {
-                Reference = new StringValue(excelParams.Merge)
-            };
-            mergeCells.Append(mergeCell);
-        }
-
+        /// <summary>
+        /// Сохраняет созданный документ Excel и закрывает его.
+        /// </summary>
+        /// <param name="info">Информация о документе Excel.</param>
         public void SaveExcel(ExcelInfo info)
         {
             if (_spreadsheetDocument == null)

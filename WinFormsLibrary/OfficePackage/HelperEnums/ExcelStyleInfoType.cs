@@ -6,6 +6,8 @@
 
         Text,
 
-        TextWithBorder
+        TextWithBorder,
+
+        TitleWithBorder
     }
 }

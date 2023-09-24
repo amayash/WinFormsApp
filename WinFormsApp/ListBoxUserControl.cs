@@ -11,14 +11,16 @@
         {
             get { return listBox.Items; }
         }
-
-        // Публичный метод для очистки списка
+        /// <summary>
+        /// Публичный метод для очистки списка.
+        /// </summary>
         public void ClearItems()
         {
             listBox.Items.Clear();
         }
-
-        // Публичное свойство для установки и получения выбранного значения
+        /// <summary>
+        /// Публичное свойство для установки и получения выбранного значения.
+        /// </summary>
         public string? SelectedValue
         {
             get
@@ -43,16 +45,20 @@
                 }
             }
         }
-
-        // Событие, вызываемое при смене значения в ListBox
+        /// <summary>
+        /// Событие, вызываемое при смене значения в ListBox.
+        /// </summary>
         private event EventHandler? selectedValueChanged;
         public event EventHandler? SelectedValueChanged
         {
             add => selectedValueChanged += value;
             remove => selectedValueChanged -= value;
         }
-
-        // Обработчик события SelectedIndexChanged для ListBox
+        /// <summary>
+        /// Обработчик события SelectedIndexChanged для ListBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedValueChanged?.Invoke(this, e);
