@@ -71,10 +71,10 @@ namespace WinFormsLibrary
                 {
                     for (int j = 0; j < columns; j++)
                     {
-                        char columnLabel = (char)('A' + j);
+                        string columnName = GetColumnName(j + 1); 
                         saveToExcel.InsertCellInWorksheet(new ExcelCellParameters
                         {
-                            ColumnName = columnLabel.ToString(),
+                            ColumnName = columnName,
                             RowIndex = rowIndex,
                             Text = table[i, j],
                             StyleInfo = ExcelStyleInfoType.TextWithBorder
@@ -86,5 +86,25 @@ namespace WinFormsLibrary
             saveToExcel.SaveExcel(info);
 
         }
+        /// <summary>
+        /// Вспомогательная функция для преобразования числового индекса столбца в буквенное обозначение.
+        /// </summary>
+        /// <param name="columnIndex">Числовой индекс столбца.</param>
+        /// <returns>Буквенное обозначение столбца (например, "A", "B", "AA", "AB" и так далее).</returns>
+        private string GetColumnName(int columnIndex)
+        {
+            const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string columnName = "";
+
+            while (columnIndex > 0)
+            {
+                int remainder = (columnIndex - 1) % 26;
+                columnName = letters[remainder] + columnName;
+                columnIndex = (columnIndex - 1) / 26;
+            }
+
+            return columnName;
+        }
+
     }
 }

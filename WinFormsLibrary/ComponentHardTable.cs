@@ -65,36 +65,38 @@ namespace WinFormsLibrary
             uint rowIndex = 2;
 
             // Устанавливаем заголовки
-            char columnLabel = 'A';
+            int columnIndex = 0;
             foreach (var title in info.Titles)
             {
+                string columnLabel = GetColumnName(columnIndex);
                 saveToExcel.InsertCellInWorksheet(new ExcelCellParameters
                 {
-                    ColumnName = columnLabel.ToString(),
+                    ColumnName = columnLabel,
                     RowIndex = rowIndex,
                     Text = title,
                     StyleInfo = ExcelStyleInfoType.TitleWithBorder
                 });
-                columnLabel++;
+                columnIndex++;
             }
 
             rowIndex++;
 
             foreach (var data in info.Data)
             {
-                columnLabel = 'A';
+                columnIndex = 0;
 
                 foreach (string prop in info.Props)
                 {
                     string propertyValue = GetPropertyValue(prop, data);
+                    string columnLabel = GetColumnName(columnIndex);
                     saveToExcel.InsertCellInWorksheet(new ExcelCellParameters
                     {
-                        ColumnName = columnLabel.ToString(),
+                        ColumnName = columnLabel,
                         RowIndex = rowIndex,
                         Text = propertyValue,
-                        StyleInfo = columnLabel == 'A' ? ExcelStyleInfoType.TitleWithBorder : ExcelStyleInfoType.TextWithBorder
+                        StyleInfo = columnLabel == "A" ? ExcelStyleInfoType.TitleWithBorder : ExcelStyleInfoType.TextWithBorder
                     });
-                    columnLabel++;
+                    columnIndex++;
                 }
                 rowIndex++;
             }
@@ -125,6 +127,25 @@ namespace WinFormsLibrary
             }
 
             return string.Empty;
+        }
+        /// <summary>
+        /// Вспомогательная функция для преобразования числового индекса столбца в буквенное обозначение.
+        /// </summary>
+        /// <param name="columnIndex">Числовой индекс столбца.</param>
+        /// <returns>Буквенное обозначение столбца (например, "A", "B", "AA", "AB" и так далее).</returns>
+        private string GetColumnName(int columnIndex)
+        {
+            const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string columnName = "";
+
+            while (columnIndex > 0)
+            {
+                int remainder = (columnIndex - 1) % 26;
+                columnName = letters[remainder] + columnName;
+                columnIndex = (columnIndex - 1) / 26;
+            }
+
+            return columnName;
         }
     }
 }
