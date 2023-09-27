@@ -65,7 +65,7 @@ namespace WinFormsLibrary
             uint rowIndex = 2;
 
             // Устанавливаем заголовки
-            int columnIndex = 0;
+            int columnIndex = 1;
             foreach (var title in info.Titles)
             {
                 string columnLabel = GetColumnName(columnIndex);
@@ -83,7 +83,7 @@ namespace WinFormsLibrary
 
             foreach (var data in info.Data)
             {
-                columnIndex = 0;
+                columnIndex = 1;
 
                 foreach (string prop in info.Props)
                 {
@@ -94,7 +94,7 @@ namespace WinFormsLibrary
                         ColumnName = columnLabel,
                         RowIndex = rowIndex,
                         Text = propertyValue,
-                        StyleInfo = columnLabel == "A" ? ExcelStyleInfoType.TitleWithBorder : ExcelStyleInfoType.TextWithBorder
+                        StyleInfo = columnIndex == 1 ? ExcelStyleInfoType.TitleWithBorder : ExcelStyleInfoType.TextWithBorder
                     });
                     columnIndex++;
                 }

@@ -16,12 +16,11 @@ namespace WinFormsLibrary.OfficePackage
             if (string.IsNullOrEmpty(info.FileName) ||
                 string.IsNullOrEmpty(info.Title) ||
                 string.IsNullOrEmpty(info.TitleChart) ||
-                info.SeriesNames.Length == 0 ||
-                info.Data.Length == 0)
+                info.SeriesAndData.Count == 0)
             {
                 throw new ArgumentException("Неполные входные данные.");
             }
-            if (info.SeriesNames.Any(string.IsNullOrEmpty))
+            if (info.SeriesAndData.Any(x => string.IsNullOrEmpty(x.Series)))
             {
                 throw new ArgumentException("Неверные входные данные.");
             }
@@ -38,15 +37,15 @@ namespace WinFormsLibrary.OfficePackage
             sheetData.Range["A1"].Text = "Серия";
             sheetData.Range["B1"].Text = "Значение";
 
-            for (int i = 0; i < info.SeriesNames.Length; i++)
+            for (int i = 0; i < info.SeriesAndData.Count; i++)
             {
-                sheetData.Range["A" + (i + 2)].Text = info.SeriesNames[i];
-                sheetData.Range["B" + (i + 2)].NumberValue = info.Data[i];
+                sheetData.Range["A" + (i + 2)].Text = info.SeriesAndData[i].Series;
+                sheetData.Range["B" + (i + 2)].NumberValue = info.SeriesAndData[i].Value;
             }
 
             // Добавление гистограммы
             Chart chart = sheetChart.Charts.Add(ExcelChartType.ColumnClustered);
-            chart.DataRange = sheetData.Range["A1:B" + (info.SeriesNames.Length + 1)];
+            chart.DataRange = sheetData.Range["A1:B" + (info.SeriesAndData.Count + 1)];
             chart.ChartTitle = info.TitleChart;
             chart.TopRow = 2;
 

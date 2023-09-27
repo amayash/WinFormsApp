@@ -12,8 +12,6 @@ namespace WinFormsLibrary.OfficePackage.HelperModels
 
         public LegendPosition LegendPosition { get; set; } = LegendPosition.Bottom;
 
-        public string[] SeriesNames { get; set; } = Array.Empty<string>();
-
-        public double[] Data { get; set; } = Array.Empty<double>();
+        public List<(string Series, double Value)> SeriesAndData { get; set; } = new();
     }
 }

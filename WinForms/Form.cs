@@ -151,7 +151,7 @@ namespace WinFormsApp
             list1.Add(arr3);
             componentTable.CreateTableReport(new ExcelInfo()
             {
-                FileName = "D:\\test1.xlsx",
+                FileName = "C:\\myFiles\\test1.xlsx",
                 Title = "title1",
                 Tables = list1
             });
@@ -177,7 +177,7 @@ namespace WinFormsApp
             double[] heights = { 25, 15, 15 };
             componentHardTable.CreateHardTableReport(new ExcelInfoTable<Person>
             {
-                FileName = "D:\\output.xlsx",
+                FileName = "C:\\myFiles\\test2.xlsx",
                 Title = "main title",
                 Titles = titles,
                 Data = people,
@@ -196,14 +196,18 @@ namespace WinFormsApp
         {
             string[] seriesNames = { "1", "2", "3" };
             double[] data = { 5, 5, 10 };
+            var serAndData = new List<(string, double)>();
+            for (int i=0;i<seriesNames.Length;i++)
+            {
+                serAndData.Add((seriesNames[i], data[i]));
+            }
             componentChart.CreateChartReport(new ExcelInfoChart()
             {
-                FileName = "D:\\chart.xlsx",
+                FileName = "C:\\myFiles\\test3.xlsx",
                 Title = "Äטאדנאללךא",
                 TitleChart = "Ãטסעמדנאללךא",
                 LegendPosition = LegendPosition.Bottom,
-                SeriesNames = seriesNames,
-                Data = data
+                SeriesAndData = serAndData
             });
         }
     }
