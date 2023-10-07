@@ -33,11 +33,12 @@
             // 
             // listBox
             // 
+            listBox.Dock = DockStyle.Fill;
             listBox.FormattingEnabled = true;
             listBox.ItemHeight = 15;
-            listBox.Location = new Point(3, 3);
+            listBox.Location = new Point(0, 0);
             listBox.Name = "listBox";
-            listBox.Size = new Size(144, 94);
+            listBox.Size = new Size(150, 103);
             listBox.TabIndex = 0;
             listBox.SelectedIndexChanged += ListBox_SelectedIndexChanged;
             // 

@@ -35,10 +35,11 @@
             // dataGridView
             // 
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView.Location = new Point(3, 3);
+            dataGridView.Dock = DockStyle.Fill;
+            dataGridView.Location = new Point(0, 0);
             dataGridView.Name = "dataGridView";
             dataGridView.RowTemplate.Height = 25;
-            dataGridView.Size = new Size(399, 306);
+            dataGridView.Size = new Size(407, 314);
             dataGridView.TabIndex = 0;
             dataGridView.SelectionChanged += DataGridView_SelectionChanged;
             // 

@@ -197,7 +197,7 @@ namespace WinFormsApp
             string[] seriesNames = { "1", "2", "3" };
             double[] data = { 5, 5, 10 };
             var serAndData = new List<(string, double)>();
-            for (int i=0;i<seriesNames.Length;i++)
+            for (int i = 0; i < seriesNames.Length; i++)
             {
                 serAndData.Add((seriesNames[i], data[i]));
             }
