@@ -165,16 +165,16 @@ namespace WinFormsApp
                         Header = "Сотрудники",
                         Data = employees,
                         Headers = new List<(int row, string header, string property, int height)>()
-                {
-                    (0, "ФИО", "FullName", 100),
-                    (1, "Должности", "PositionsStr", 200),
-                    (2, "Подразделение", "Department", 100),
-                    (3, "Стаж работы", "YearsOfWork", 100),
-                },
+                        {
+                            (0, "ФИО", "FullName", 100),
+                            (1, "Должности", "PositionsStr", 200),
+                            (2, "Подразделение", "Department", 100),
+                            (3, "Стаж работы", "YearsOfWork", 100),
+                        },
                         MergedCells = new List<(int startInd, int EndInd, string header)>()
-                {
-                    (2,3,"Работа"),
-                }
+                        {
+                            (2,3,"Работа"),
+                        }
                     };
                     customDocumentTableWord.CreateTable(list);
 
@@ -223,7 +223,6 @@ namespace WinFormsApp
                     MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-
         }
     }
 }
