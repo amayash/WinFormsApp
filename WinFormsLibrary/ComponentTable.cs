@@ -71,7 +71,7 @@ namespace WinFormsLibrary
                 {
                     for (int j = 0; j < columns; j++)
                     {
-                        string columnName = GetColumnName(j + 1); 
+                        string columnName = GetColumnName(j + 1);
                         saveToExcel.InsertCellInWorksheet(new ExcelCellParameters
                         {
                             ColumnName = columnName,

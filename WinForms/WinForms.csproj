@@ -9,9 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CustomNonVisualComponent" Version="1.0.0" />
+    <PackageReference Include="CustomVisualComponent" Version="1.0.0" />
+    <PackageReference Include="NonVisualComponents" Version="1.0.0" />
+    <PackageReference Include="VisualComponents" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EmployeeTracking\EmployeeTracking.csproj" />
     <ProjectReference Include="..\WinFormsApp\WinFormsApp.csproj" />
     <ProjectReference Include="..\WinFormsLibrary\WinFormsLibrary.csproj" />
   </ItemGroup>
