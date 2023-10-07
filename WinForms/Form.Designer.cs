@@ -29,62 +29,14 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            buttonGet = new Button();
-            buttonTable = new Button();
-            button2 = new Button();
-            button3 = new Button();
             componentHardTable = new WinFormsLibrary.ComponentHardTable(components);
             SuspendLayout();
-            // 
-            // buttonGet
-            // 
-            buttonGet.Location = new Point(176, 12);
-            buttonGet.Name = "buttonGet";
-            buttonGet.Size = new Size(38, 23);
-            buttonGet.TabIndex = 0;
-            buttonGet.Text = "get";
-            buttonGet.UseVisualStyleBackColor = true;
-            buttonGet.Click += ButtonGet_Click;
-            // 
-            // buttonTable
-            // 
-            buttonTable.Location = new Point(8, 357);
-            buttonTable.Name = "buttonTable";
-            buttonTable.Size = new Size(75, 23);
-            buttonTable.TabIndex = 1;
-            buttonTable.Text = "table";
-            buttonTable.UseVisualStyleBackColor = true;
-            buttonTable.Click += ButtonTable_Click;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(8, 386);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 2;
-            button2.Text = "hard table";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += ButtonHardTable_Click;
-            // 
-            // button3
-            // 
-            button3.Location = new Point(8, 415);
-            button3.Name = "button3";
-            button3.Size = new Size(75, 23);
-            button3.TabIndex = 3;
-            button3.Text = "chart";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += ButtonChart_Click;
             // 
             // Form
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(778, 450);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(buttonTable);
-            Controls.Add(buttonGet);
             Name = "Form";
             Text = "Form";
             Load += Form_Load;
@@ -93,10 +45,6 @@
 
         #endregion
         private TextBox textBoxDate;
-        private Button buttonGet;
-        private Button buttonTable;
-        private Button button2;
-        private Button button3;
         private WinFormsLibrary.ComponentHardTable componentHardTable;
     }
 }
