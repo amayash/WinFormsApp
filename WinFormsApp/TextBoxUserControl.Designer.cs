@@ -28,39 +28,40 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox = new System.Windows.Forms.TextBox();
-            this.checkBox = new System.Windows.Forms.CheckBox();
-            this.SuspendLayout();
+            textBox = new TextBox();
+            checkBox = new CheckBox();
+            SuspendLayout();
             // 
             // textBox
             // 
-            this.textBox.Location = new System.Drawing.Point(3, 3);
-            this.textBox.Name = "textBox";
-            this.textBox.Size = new System.Drawing.Size(100, 23);
-            this.textBox.TabIndex = 0;
+            textBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox.Location = new Point(0, 0);
+            textBox.Name = "textBox";
+            textBox.Size = new Size(159, 23);
+            textBox.TabIndex = 0;
             // 
             // checkBox
             // 
-            this.checkBox.AutoSize = true;
-            this.checkBox.Location = new System.Drawing.Point(109, 5);
-            this.checkBox.Name = "checkBox";
-            this.checkBox.Size = new System.Drawing.Size(60, 19);
-            this.checkBox.TabIndex = 1;
-            this.checkBox.Text = "empty";
-            this.checkBox.UseVisualStyleBackColor = true;
-            this.checkBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
+            checkBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            checkBox.AutoSize = true;
+            checkBox.Location = new Point(3, 29);
+            checkBox.Name = "checkBox";
+            checkBox.Size = new Size(60, 19);
+            checkBox.TabIndex = 1;
+            checkBox.Text = "empty";
+            checkBox.UseVisualStyleBackColor = true;
+            checkBox.CheckedChanged += CheckBox_CheckedChanged;
             // 
             // TextBoxUserControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.checkBox);
-            this.Controls.Add(this.textBox);
-            this.Name = "TextBoxUserControl";
-            this.Size = new System.Drawing.Size(170, 32);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(checkBox);
+            Controls.Add(textBox);
+            Name = "TextBoxUserControl";
+            Size = new Size(162, 51);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
