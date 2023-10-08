@@ -38,6 +38,7 @@ namespace WinFormsApp
                 if (value.HasValue)
                 {
                     textBox.Text = value.Value.ToString("dd.MM.yyyy"); // Устанавливает текст в TextBox
+                    checkBox.Checked = false;
                 }
                 else
                 {
@@ -66,6 +67,7 @@ namespace WinFormsApp
             {
                 textBox.Text = null;
             }
+            valueChanged?.Invoke(this, e);
         }
     }
 }

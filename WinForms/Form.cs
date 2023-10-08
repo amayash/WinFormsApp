@@ -18,7 +18,6 @@ namespace WinFormsApp
             customListBox.FillTemplateProperties("Идентификатор @Id@, ФИО сотрудника @FullName@, должности @PositionsStr@, подразделение @Department@, стаж работы @YearsOfWork@", '@', '@');
         }
 
-
         /// <summary>
         /// Метод, вызываемый после загрузки формы.
         /// </summary>
@@ -28,7 +27,6 @@ namespace WinFormsApp
         {
             LoadData();
         }
-
         private void LoadData()
         {
             var list = _employeeStorage.GetFullList();
@@ -50,7 +48,7 @@ namespace WinFormsApp
             }
         }
 
-        private void создатьСотрудникаToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CreateEmployeeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var service = Program.ServiceProvider?.GetService(typeof(FormEmployee));
             if (service is FormEmployee form)
@@ -62,11 +60,16 @@ namespace WinFormsApp
             }
         }
 
-        private void изменитьСотрудникаToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EditEmployeeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var service = Program.ServiceProvider?.GetService(typeof(FormEmployee));
             if (service is FormEmployee form)
             {
+                if (customListBox.CurrentRow < 0)
+                {
+                    MessageBox.Show("Выберите сотрудника", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 EmployeeListBoxViewModel obj = customListBox.GetObjectFromStr<EmployeeListBoxViewModel>();
                 form.Id = Convert.ToInt32(obj.Id);
                 if (form.ShowDialog() == DialogResult.OK)
@@ -76,7 +79,7 @@ namespace WinFormsApp
             }
         }
 
-        private void удалитьСотрудникаToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DeleteEmployeeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (customListBox.CurrentRow >= 0)
             {
@@ -87,7 +90,7 @@ namespace WinFormsApp
             }
         }
 
-        private void создатьДолжностьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ManagePositionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var service = Program.ServiceProvider?.GetService(typeof(FormPositions));
             if (service is FormPositions form)
@@ -99,7 +102,7 @@ namespace WinFormsApp
             }
         }
 
-        private void созданиеПростогоДокументаToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CreateSimpleDocumentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (customListBox.CurrentRow < 0)
             {
@@ -146,7 +149,7 @@ namespace WinFormsApp
             }
         }
 
-        private void cозданиеДокументаСНастраиваемойТаблицейToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CreateDocumentWithCustomizableTableToolStripMenuItem(object sender, EventArgs e)
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
@@ -183,8 +186,7 @@ namespace WinFormsApp
             }
         }
 
-
-        private void cозданиеДокументаСДиаграммойToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CreateDocumentWithChartToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var employees = _employeeStorage.GetFullList();
 
@@ -221,6 +223,37 @@ namespace WinFormsApp
                         Series = experienceData,
                     });
                     MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void Form_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.A:
+                        CreateEmployeeToolStripMenuItem_Click(sender, e);
+                        break;
+                    case Keys.U:
+                        EditEmployeeToolStripMenuItem_Click(sender, e);
+                        break;
+                    case Keys.D:
+                        DeleteEmployeeToolStripMenuItem_Click(sender, e);
+                        break;
+                    case Keys.S:
+                        CreateSimpleDocumentToolStripMenuItem_Click(sender, e);
+                        break;
+                    case Keys.T:
+                        CreateDocumentWithCustomizableTableToolStripMenuItem(sender, e);
+                        break;
+                    case Keys.C:
+                        CreateDocumentWithChartToolStripMenuItem_Click(sender, e);
+                        break;
+                    case Keys.X:
+                        ManagePositionsToolStripMenuItem_Click(sender, e);
+                        break;
                 }
             }
         }

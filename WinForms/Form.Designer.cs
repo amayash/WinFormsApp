@@ -67,49 +67,56 @@
             создатьСотрудникаToolStripMenuItem.Name = "создатьСотрудникаToolStripMenuItem";
             создатьСотрудникаToolStripMenuItem.Size = new Size(339, 22);
             создатьСотрудникаToolStripMenuItem.Text = "Создать сотрудника";
-            создатьСотрудникаToolStripMenuItem.Click += создатьСотрудникаToolStripMenuItem_Click;
+            создатьСотрудникаToolStripMenuItem.ToolTipText = "Ctrl + A";
+            создатьСотрудникаToolStripMenuItem.Click += CreateEmployeeToolStripMenuItem_Click;
             // 
             // изменитьСотрудникаToolStripMenuItem
             // 
             изменитьСотрудникаToolStripMenuItem.Name = "изменитьСотрудникаToolStripMenuItem";
             изменитьСотрудникаToolStripMenuItem.Size = new Size(339, 22);
             изменитьСотрудникаToolStripMenuItem.Text = "Изменить сотрудника";
-            изменитьСотрудникаToolStripMenuItem.Click += изменитьСотрудникаToolStripMenuItem_Click;
+            изменитьСотрудникаToolStripMenuItem.ToolTipText = "Ctrl + U";
+            изменитьСотрудникаToolStripMenuItem.Click += EditEmployeeToolStripMenuItem_Click;
             // 
             // удалитьСотрудникаToolStripMenuItem
             // 
             удалитьСотрудникаToolStripMenuItem.Name = "удалитьСотрудникаToolStripMenuItem";
             удалитьСотрудникаToolStripMenuItem.Size = new Size(339, 22);
             удалитьСотрудникаToolStripMenuItem.Text = "Удалить сотрудника";
-            удалитьСотрудникаToolStripMenuItem.Click += удалитьСотрудникаToolStripMenuItem_Click;
+            удалитьСотрудникаToolStripMenuItem.ToolTipText = "Ctrl + D";
+            удалитьСотрудникаToolStripMenuItem.Click += DeleteEmployeeToolStripMenuItem_Click;
             // 
             // создатьДолжностьToolStripMenuItem
             // 
             создатьДолжностьToolStripMenuItem.Name = "создатьДолжностьToolStripMenuItem";
             создатьДолжностьToolStripMenuItem.Size = new Size(339, 22);
             создатьДолжностьToolStripMenuItem.Text = "Управление должностями";
-            создатьДолжностьToolStripMenuItem.Click += создатьДолжностьToolStripMenuItem_Click;
+            создатьДолжностьToolStripMenuItem.ToolTipText = "Ctrl + X";
+            создатьДолжностьToolStripMenuItem.Click += ManagePositionsToolStripMenuItem_Click;
             // 
             // созданиеПростогоДокументаToolStripMenuItem
             // 
             созданиеПростогоДокументаToolStripMenuItem.Name = "созданиеПростогоДокументаToolStripMenuItem";
             созданиеПростогоДокументаToolStripMenuItem.Size = new Size(339, 22);
             созданиеПростогоДокументаToolStripMenuItem.Text = "Cоздание простого документа";
-            созданиеПростогоДокументаToolStripMenuItem.Click += созданиеПростогоДокументаToolStripMenuItem_Click;
+            созданиеПростогоДокументаToolStripMenuItem.ToolTipText = "Ctrl + S";
+            созданиеПростогоДокументаToolStripMenuItem.Click += CreateSimpleDocumentToolStripMenuItem_Click;
             // 
             // cозданиеДокументаСНастраиваемойТаблицейToolStripMenuItem
             // 
             cозданиеДокументаСНастраиваемойТаблицейToolStripMenuItem.Name = "cозданиеДокументаСНастраиваемойТаблицейToolStripMenuItem";
             cозданиеДокументаСНастраиваемойТаблицейToolStripMenuItem.Size = new Size(339, 22);
             cозданиеДокументаСНастраиваемойТаблицейToolStripMenuItem.Text = "Cоздание документа с настраиваемой таблицей";
-            cозданиеДокументаСНастраиваемойТаблицейToolStripMenuItem.Click += cозданиеДокументаСНастраиваемойТаблицейToolStripMenuItem_Click;
+            cозданиеДокументаСНастраиваемойТаблицейToolStripMenuItem.ToolTipText = "Ctrl + T";
+            cозданиеДокументаСНастраиваемойТаблицейToolStripMenuItem.Click += CreateDocumentWithCustomizableTableToolStripMenuItem;
             // 
             // cозданиеДокументаСДиаграммойToolStripMenuItem
             // 
             cозданиеДокументаСДиаграммойToolStripMenuItem.Name = "cозданиеДокументаСДиаграммойToolStripMenuItem";
             cозданиеДокументаСДиаграммойToolStripMenuItem.Size = new Size(339, 22);
             cозданиеДокументаСДиаграммойToolStripMenuItem.Text = "Cоздание документа с диаграммой";
-            cозданиеДокументаСДиаграммойToolStripMenuItem.Click += cозданиеДокументаСДиаграммойToolStripMenuItem_Click;
+            cозданиеДокументаСДиаграммойToolStripMenuItem.ToolTipText = "Ctrl + C";
+            cозданиеДокументаСДиаграммойToolStripMenuItem.Click += CreateDocumentWithChartToolStripMenuItem_Click;
             // 
             // Form
             // 
@@ -117,9 +124,11 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(778, 450);
             Controls.Add(customListBox);
+            KeyPreview = true;
             Name = "Form";
             Text = "Form";
             Load += Form_Load;
+            KeyDown += Form_KeyDown;
             contextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
         }

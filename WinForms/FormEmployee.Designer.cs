@@ -38,8 +38,9 @@
             customCheckedListBoxPositions = new CustomVisualComponent.CustomCheckedListBox();
             buttonSave = new Button();
             labelEmployeePositions = new Label();
-            buttonEditPosition = new Button();
+            buttonAddPosition = new Button();
             dataGridViewEmployeePositions = new DataGridView();
+            buttonDeletePosition = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridViewEmployeePositions).BeginInit();
             SuspendLayout();
             // 
@@ -125,7 +126,7 @@
             buttonSave.TabIndex = 11;
             buttonSave.Text = "Сохранить";
             buttonSave.UseVisualStyleBackColor = true;
-            buttonSave.Click += buttonSave_Click;
+            buttonSave.Click += ButtonSave_Click;
             // 
             // labelEmployeePositions
             // 
@@ -136,15 +137,15 @@
             labelEmployeePositions.TabIndex = 13;
             labelEmployeePositions.Text = "Должности сотрудника";
             // 
-            // buttonEditPosition
+            // buttonAddPosition
             // 
-            buttonEditPosition.Location = new Point(15, 306);
-            buttonEditPosition.Name = "buttonEditPosition";
-            buttonEditPosition.Size = new Size(133, 54);
-            buttonEditPosition.TabIndex = 14;
-            buttonEditPosition.Text = "Добавить/Удалить должность у сотрудника";
-            buttonEditPosition.UseVisualStyleBackColor = true;
-            buttonEditPosition.Click += buttonEditPosition_Click;
+            buttonAddPosition.Location = new Point(15, 306);
+            buttonAddPosition.Name = "buttonAddPosition";
+            buttonAddPosition.Size = new Size(133, 54);
+            buttonAddPosition.TabIndex = 14;
+            buttonAddPosition.Text = "Добавить должность сотруднику";
+            buttonAddPosition.UseVisualStyleBackColor = true;
+            buttonAddPosition.Click += ButtonAddPosition_Click;
             // 
             // dataGridViewEmployeePositions
             // 
@@ -156,13 +157,24 @@
             dataGridViewEmployeePositions.Size = new Size(252, 138);
             dataGridViewEmployeePositions.TabIndex = 15;
             // 
+            // buttonDeletePosition
+            // 
+            buttonDeletePosition.Location = new Point(15, 162);
+            buttonDeletePosition.Name = "buttonDeletePosition";
+            buttonDeletePosition.Size = new Size(133, 54);
+            buttonDeletePosition.TabIndex = 16;
+            buttonDeletePosition.Text = "Удалить должность у сотрудника";
+            buttonDeletePosition.UseVisualStyleBackColor = true;
+            buttonDeletePosition.Click += ButtonDeletePosition_Click;
+            // 
             // FormEmployee
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(418, 508);
+            Controls.Add(buttonDeletePosition);
             Controls.Add(dataGridViewEmployeePositions);
-            Controls.Add(buttonEditPosition);
+            Controls.Add(buttonAddPosition);
             Controls.Add(labelEmployeePositions);
             Controls.Add(buttonSave);
             Controls.Add(customCheckedListBoxPositions);
@@ -175,6 +187,7 @@
             Controls.Add(textBoxFullName);
             Name = "FormEmployee";
             Text = "Сотрудник";
+            FormClosing += Form_FormClosing;
             Load += FormEmployee_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridViewEmployeePositions).EndInit();
             ResumeLayout(false);
@@ -193,7 +206,8 @@
         private CustomVisualComponent.CustomCheckedListBox customCheckedListBoxPositions;
         private Button buttonSave;
         private Label labelEmployeePositions;
-        private Button buttonEditPosition;
+        private Button buttonAddPosition;
         private DataGridView dataGridViewEmployeePositions;
+        private Button buttonDeletePosition;
     }
 }
