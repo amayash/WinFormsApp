@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EmployeeTracking\EmployeeTracking.csproj" />
+    <ProjectReference Include="..\PluginsConventionLibraryNet60\PluginsConventionLibraryNet60.csproj" />
     <ProjectReference Include="..\WinFormsApp\WinFormsApp.csproj" />
     <ProjectReference Include="..\WinFormsLibrary\WinFormsLibrary.csproj" />
   </ItemGroup>
@@ -26,5 +27,7 @@
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
-
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="copy /Y &quot;$(TargetDir)*.dll&quot; &quot;$(SolutionDir)Plugins\*.dll&quot;" />
+	</Target>
 </Project>
